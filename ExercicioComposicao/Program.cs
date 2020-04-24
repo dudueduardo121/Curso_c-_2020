@@ -46,7 +46,7 @@ namespace ExercicioComposicao {
             int ano = int.Parse(mesAno.Substring(3));
             Console.WriteLine("Nome Funcionario:" + func.Nome);
             Console.WriteLine("Departamento: " + func.Departamento.Name);
-            Console.WriteLine("Renda anual: " + mesAno + ": " + func.GanhoSalarial(ano, mes));
+            Console.WriteLine("Renda anual: " + mesAno + ": " + func.GanhoSalarial(ano, mes).ToString("f2", CultureInfo.InvariantCulture));
         }
     }
 }
