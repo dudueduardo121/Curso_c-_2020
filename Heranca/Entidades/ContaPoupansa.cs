@@ -16,5 +16,10 @@ namespace Heranca.Entidades {
         public void AtualizarSaldo() {
             Saldo = Saldo * TaxadeJuros;
         }
+
+        public override void Saque(double quantia) {
+            base.Saque(quantia);
+            Saldo -= 2.0;
+        }
     }
 }
