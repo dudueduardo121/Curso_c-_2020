@@ -37,6 +37,7 @@ namespace Exercicio_Resolvido_Heranca_01 {
             Console.WriteLine();
             Console.WriteLine("Pagamentos:");
 
+            // Emprime a lista de funcionarios cadastrados
             foreach(Funcionario func in list) {
                 Console.WriteLine(func.Nome + " - $"+ func.Pagamento().ToString("f2"), CultureInfo.InvariantCulture);
             }
