@@ -12,12 +12,9 @@ namespace Curso {
 
             }catch(DivideByZeroException erro){
                 Console.WriteLine("Erro! " + erro.Message);
+            }finally {
+                Console.WriteLine("Conexão fechada!!!");
             }
-            catch (FormatException erro) {
-                Console.WriteLine("Erro! " + erro.Message);
-            }
-
-
 
         }
     }
