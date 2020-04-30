@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Heranca.Entidades {
-    class Conta {
+   abstract class Conta {
         public int numero { get; private set; }
         public string Titular { get; private set; }
         public double Saldo { get; protected set; }
