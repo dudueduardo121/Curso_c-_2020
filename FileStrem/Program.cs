@@ -5,13 +5,15 @@ namespace FileStrem {
     class Program {
         static void Main(string[] args) {
 
-            string path = @"c:\temp\file.txt";
+            string origem = @"c:\temp\file.txt";
+            string destino = @"c:\temp\file2.txt";
 
             try {
-                using (StreamReader sr = File.OpenText(path)) {
-                    while (!sr.EndOfStream) {
-                        string line = sr.ReadLine();
-                        Console.WriteLine(line);
+                string[] lines = File.ReadAllLines(origem);
+
+                using (StreamWriter sw = File.AppendText(destino)) {
+                    foreach (string line in lines) {
+                        sw.WriteLine(line.ToUpper());
                     }
                 }
             }
