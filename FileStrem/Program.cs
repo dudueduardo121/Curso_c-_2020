@@ -1,21 +1,31 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace FileStrem {
     class Program {
         static void Main(string[] args) {
 
-            string origem = @"c:\temp\file.txt";
-            string destino = @"c:\temp\file2.txt";
+            string pasta = @"c:\temp";
 
             try {
-                string[] lines = File.ReadAllLines(origem);
+                // LISTA PASTAS
+               var folder =  Directory.EnumerateDirectories(pasta, "*.*", SearchOption.AllDirectories);
 
-                using (StreamWriter sw = File.AppendText(destino)) {
-                    foreach (string line in lines) {
-                        sw.WriteLine(line.ToUpper());
-                    }
+                Console.WriteLine("Folders");
+                foreach(string s in folder) {
+                    Console.WriteLine(s);
                 }
+                // LISTA ARQUIVOS DAS PASTAS
+                var files = Directory.EnumerateFiles(pasta, "*.*", SearchOption.AllDirectories);
+
+                Console.WriteLine("FILEs");
+                foreach (string s in files) {
+                    Console.WriteLine(s);
+                }
+                //CRIAR NOVA PASTA
+                Directory.CreateDirectory(pasta + @"\novapasta");
+
             }
             catch (IOException e) {
                 Console.WriteLine("Erro");
