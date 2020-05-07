@@ -6,6 +6,9 @@ namespace ExerciciosemInterface.Servicos {
         public double ValorHora { get; private set; }
         public double valorDia { get; private set; }
 
+        private TaxaImpostoBr TaxaBr = new TaxaImpostoBr();
+
+
         public ServicoAluguel(double valorHora, double valorDia) {
             ValorHora = valorHora;
             this.valorDia = valorDia;
@@ -13,6 +16,9 @@ namespace ExerciciosemInterface.Servicos {
 
         public void processoFatura(AluguelCarro aluguelCarro) {
 
+            TimeSpan duracao = aluguelCarro.Fim.Subtract(aluguelCarro.inicio);
+
+            
         }
     }
 }
