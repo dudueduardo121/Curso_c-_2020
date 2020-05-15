@@ -8,7 +8,7 @@ namespace Cursos {
             Console.WriteLine(dt.ElapedTime());
 
             string s1 = "bom dia Pessoal";
-            Console.WriteLine(s1.Cut(3));
+            Console.WriteLine(s1.Cut(8));
         }
     }
 }
