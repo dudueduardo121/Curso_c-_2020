@@ -1,7 +1,52 @@
-﻿
+﻿<!--model corresponde a view list vendedores-->
+@model IEnumerable<SalesWebMvc.Models.Vendedor>
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Vendedores";
 }
 
-<h2>Vendedores</h2>
-<p>Pagina de Vendedores</p>
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-hover table-striped ">
+    <thead class="bg-info" >
+        <tr >
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataNascimento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalarioBase)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td scope="row">
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataNascimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SalarioBase)
+            </td>
+            <td>
+                <button class="btn-group btn-success"><a asp-action="Edit" asp-route-id="@item.Id">Edite</a></button>
+                <button class="btn-group btn-primary"><a asp-action="Detalhes" asp-route-id="@item.Id">Detalhes</a></button>
+                <button class="btn-group btn-danger"><a asp-action="Delete" asp-route-id="@item.Id">Deletar</a></button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
