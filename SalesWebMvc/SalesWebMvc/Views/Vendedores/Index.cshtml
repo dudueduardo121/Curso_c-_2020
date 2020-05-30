@@ -46,9 +46,9 @@
                 @Html.DisplayFor(modelItem => item.SalarioBase)
             </td>
             <td>
-                <button asp-action="Edit" asp-route-id="@item.Id" class="btn-group btn-success">Edite</button>
-                <button asp-action="Detalhes" asp-route-id="@item.Id" class="btn-group btn-primary">Detalhes</button>
-                <button asp-action="Delete" asp-route-id="@item.Id" class="btn-group btn-danger">Deletar</button>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn-group btn-success">Edite</a>
+                <a asp-action="Detalhes" asp-route-id="@item.Id" class="btn-group btn-primary">Detalhes</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn-group btn-danger">Deletar</a>
             </td>
         </tr>
         }
