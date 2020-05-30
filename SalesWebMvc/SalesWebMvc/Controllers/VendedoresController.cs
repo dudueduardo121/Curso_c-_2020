@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SalesWebMvc.Models;
+using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Services;
 
 namespace SalesWebMvc.Controllers
@@ -11,10 +12,12 @@ namespace SalesWebMvc.Controllers
     public class VendedoresController : Controller
     {
         private readonly VendedorServico _vendedorServico;
+        private readonly DepartamentoServico _departamentoServico;
 
-        public VendedoresController(VendedorServico vendedorServico)
+        public VendedoresController(VendedorServico vendedorServico, DepartamentoServico departamentoServico)
         {
             _vendedorServico = vendedorServico;
+            _departamentoServico = departamentoServico;
         }
         public IActionResult Index()
         {
@@ -25,7 +28,9 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult Create()
         {
-            return View();
+            var departamentos = _departamentoServico.FindAll();
+            var viewModel = new formVendedorViewModel { Departamentos = departamentos };
+            return View(viewModel);
         }
 
         [HttpPost] // Indicar que uma ação de POST
