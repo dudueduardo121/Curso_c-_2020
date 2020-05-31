@@ -21,6 +21,10 @@ namespace SalesWebMvc.Controllers
             _vendedorServico = vendedorServico;
             _departamentoServico = departamentoServico;
         }
+
+
+        // INDEX VIEW
+
         public async Task<IActionResult> Index()
         {
             // passa a lista como argumento no methodo view
@@ -28,12 +32,19 @@ namespace SalesWebMvc.Controllers
             return View(list);
         }
 
+
+        // CREATE
+
         public async Task<IActionResult> Create()
         {
             var departamentos = await _departamentoServico.FindAllAsync();
             var viewModel = new formVendedorViewModel { Departamentos = departamentos };
             return View(viewModel);
         }
+
+
+
+        // CREATE POST
 
         [HttpPost] // Indicar que uma ação de POST
         [ValidateAntiForgeryToken]// previnir ataques na sessão CSRF
@@ -51,6 +62,9 @@ namespace SalesWebMvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        // DELETAR
+
         public async Task<IActionResult> Delete(int? Id)
         {
             if (Id == null)
@@ -67,13 +81,30 @@ namespace SalesWebMvc.Controllers
             return View(obj);
         }
 
+
+
+        // DELETAR POST
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int Id)
         {
-            await _vendedorServico.RemoverAsync(Id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _vendedorServico.RemoverAsync(Id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(IntegridadeExcessao e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message});
+            }
+
         }
+
+
+
+        // DETALHES
 
         public async Task<IActionResult> Detalhes(int? Id)
         {
@@ -90,6 +121,10 @@ namespace SalesWebMvc.Controllers
 
             return View(obj);
         }
+
+
+
+        // EDITAR
 
         public async Task<IActionResult> Edit(int? Id)
         {
@@ -109,6 +144,11 @@ namespace SalesWebMvc.Controllers
             formVendedorViewModel viewModel = new formVendedorViewModel { Vendedor = obj, Departamentos = departamentos };
             return View(viewModel);
         }
+
+
+
+
+        //EDITAR POST
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -138,6 +178,9 @@ namespace SalesWebMvc.Controllers
             }
            
         }
+
+
+        // ERROR
 
         public IActionResult Error(string message)
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using SalesWebMvc.Models;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Services.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMvc.Services
 {
@@ -17,33 +18,51 @@ namespace SalesWebMvc.Services
             _context = context;
         }
 
-        public List<Vendedor> findAll()
+        // operação syncrona
+
+        /*public List<Vendedor> findAll()
         {
             // acessar os dados vendedores a atribui a uma list
             return _context.Vendedor.ToList();
+        }*/
+
+        // operação Asyncrona
+
+        public async Task<List<Vendedor>> FindAllAsync()
+        {
+            return await _context.Vendedor.ToListAsync();
         }
 
-        public void Inserir(Vendedor obj)
+        public async Task InserirAsync(Vendedor obj)
         {
             _context.Add(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public Vendedor FindById(int Id)
+        public async Task<Vendedor> FindByIdAsync(int Id)
         {
-            return _context.Vendedor.Include(obj => obj.Departamento).FirstOrDefault(obj => obj.Id == Id);
+            return await _context.Vendedor.Include(obj => obj.Departamento).FirstOrDefaultAsync(obj => obj.Id == Id);
         }
 
-        public void Remover(int Id)
+        public async Task RemoverAsync(int Id)
         {
-            var obj = _context.Vendedor.Find(Id);
-            _context.Vendedor.Remove(obj);
-            _context.SaveChanges();
+            try
+            {
+                var obj = await _context.Vendedor.FindAsync(Id);
+                _context.Vendedor.Remove(obj);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new IntegridadeExcessao("Vendedor não pode ser deletador pois o mesmo ainda possui vendas em ativo.");
+            }
         }
 
-        public void Update(Vendedor obj)
+        public async Task UpdateAsync(Vendedor obj)
         {
-            if(!_context.Vendedor.Any(x => x.Id == obj.Id))
+            bool hasAny = await _context.Vendedor.AnyAsync(x => x.Id == obj.Id);
+
+            if (!hasAny)
             {
                 throw new NotFoundException("Id não encoontrado");
             }
@@ -51,7 +70,7 @@ namespace SalesWebMvc.Services
             try
             {
                 _context.Update(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch(DbUpdateConcurrencyException e)
             {
