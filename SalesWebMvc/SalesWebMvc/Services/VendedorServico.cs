@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using SalesWebMvc.Models;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMvc.Services.Exceptions;
-using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMvc.Services
 {
@@ -52,7 +51,7 @@ namespace SalesWebMvc.Services
                 _context.Vendedor.Remove(obj);
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException e)
+            catch (DbUpdateException)
             {
                 throw new IntegridadeExcessao("Vendedor não pode ser deletador pois o mesmo ainda possui vendas em ativo.");
             }
